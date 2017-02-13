@@ -23,3 +23,7 @@ This repository contains a transducer-based implementation of noise filters for 
 
 This is not mature software. The most interesting thing about the implementation is that the processing nodes compose directly and remain totally independent of the sources, conveyances, and sinks of the processes that they modify. Thus one can apply them in an eager/pull-based collection building proceses, lazy/infinite processes, push-based coroutine processes, or indeed concurrent processes. This adds some flexability that can sometimes be useful. See filters.py for transducer implementations as python classes.
 
+## Works Cited
+
+1. Python transducer implemtation and coroutine appplication context is inspired by a [blog post by Robert Smallshire](http://sixty-north.com/blog/event-processing-with-transducers).
+2. Threaded Code was based on Python Core documentation adn Laurent Luce's excelent [blog post](http://www.laurentluce.com/posts/python-threads-synchronization-locks-rlocks-semaphores-conditions-events-and-queues).

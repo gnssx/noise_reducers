@@ -1,6 +1,15 @@
 from util import Reduced, coroutine
 import sys
 
+"""
+Implementation of reactive coroutines for 
+use with transducers is based upon a blog
+post by Robert Smallshire:
+http://sixty-north.com/blog/event-processing-with-transducers
+"""
+
+
+
 @coroutine
 def null_sink():
     while True:
