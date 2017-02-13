@@ -26,7 +26,6 @@ def build_parser():
     parser.add_argument('--num_measurements', type=int, default=10)
     parser.add_argument('--seed', type=int, default=None)
     parser.add_argument('--scan_rate', type=int, default=1)
-    parser.add_argument('--write'
     parser.add_argument('--D', metavar='N', type=int, default=10)
     parser.add_argument('--measurement_interval', metavar='N',
                         type=float, nargs=2, default=[0.03, 50])

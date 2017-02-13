@@ -36,7 +36,6 @@ class Appender:
         return []
 
     def update(self, result, item):
-        print "updating", result
         result.append(item)
         return result
 
