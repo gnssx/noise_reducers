@@ -1,4 +1,20 @@
 from bisect import bisect_right
+from collections import deque
+
+def binary_search(indexable, item):
+    low = 0
+    hi = len(indexable) - 1
+    while True:
+        if (low > hi):
+            raise ValueError('{0} is not in collection'.format(item))
+        else:
+            mid = (low + hi) / 2
+            if indexable[mid] == item:
+                return mid
+            elif indexable[mid] < item:
+                low = mid+1
+            else:
+                hi = mid-1
 
 
 class SortedList(object):
@@ -42,14 +58,19 @@ class SortedList(object):
             lst.append(item)
 
     def index(self, x):
-        return self.lst.index(x)
+        return binary_search(self.lst, x)
 
 
 
 class MedianWindow(object):
-    def __init__(self, max_size, init_list=[]):
+    def __init__(self, max_size=10, init_list=[]):
         self.window = SortedList(init_list)
+        self.deque = deque()
         self._median = None
+        
+        if max_size < 1:
+            raise ValueError('size of window must be at least 1.')
+
         self.max_size = max_size
 
     def __repr__(self):
@@ -61,36 +82,34 @@ class MedianWindow(object):
     def __len__(self):
         return len(self.window)
 
-    def __delitem__(self, i):
-        del self.window[i]
-
     def __iter__(self):
         return iter(self.window)
 
     def append(self, x):
         win = self.window
+        queue = self.deque
         size = self.max_size
 
-        if len(win) == size:
-            del win[0]
+        if len(win) > size:
+            del win[win.index(queue.popleft())]
 
         win.append(x)
-        self._median = win[len(win) / 2]
-            
-        
+        queue.append(x)
+        if len(win) % 2 == 1:
+            self._median = win[len(win) / 2]
+        else:
+            m0 = win[len(win) / 2]
+            m1 = win[(len(win) / 2) - 1]
+            self._median = (m0 + m1) / 2
+
 
     def __getitem__(self, x):
         return self.lst[x]
 
-    def pop(self, x):
-        self.lst.pop()
-        self._median = win[len(win) / 2] if win else None
-        return self.lst
-
+    
     def extend(self, items):
-        win = self.window
         for item in items:
-            win.append(item)
+            self.append(item)
 
     def index(self, x):
         return self.lst.index(x)

@@ -1,9 +1,6 @@
 from data_structures import MedianWindow
 
 
-# Definitions of transforming functions as Transducers.
-# For rational see:
-
 class RangeFilter:
     def __init__(self, reducer, min_range, max_range):
         self._reducer = reducer
@@ -31,24 +28,25 @@ class RangeFilter:
         
 def range_filter(min_range, max_range):
 
-    def range_filter_xform(reducer):
+    def _range_filter_xform(reducer):
         return RangeFilter(reducer, min_range, max_range)
 
-    return range_filter_xform
+    return _range_filter_xform
 
 
 
 
 class MedianFilter:
-    def __init__(self, reducer, window_length):
+    def __init__(self, reducer, array_size, window_length):
         self._reducer = reducer
         self.window_length = window_length
-        self.median_wins = self._init_window(window_length)
+        self.array_size = array_size
+        self.median_wins = self._init_window()
 
-    def _init_window(self, size):
+    def _init_window(self):
         median_wins = []
-        for i in range(size):
-            median_wins.append(MedianWindow(size))
+        for i in range(self.array_size):
+            median_wins.append(MedianWindow(self.window_length))
         return median_wins
 
     def initial(self):
@@ -56,7 +54,6 @@ class MedianFilter:
 
     def update(self, result, observation):
         median_wins = self.median_wins
-        
         transform = []
         for median_win, measurement in zip(median_wins, observation):
             median_win.append(measurement)
@@ -65,17 +62,14 @@ class MedianFilter:
         return self._reducer.update(result, transform)
 
     def complete(self, result):
-        self.median_wins = self._init_window(self.window_length)
+        self.median_wins = self._init_window()
         return self._reducer.complete(result)
 
 
 
-def median_filter(window_size):
+def median_filter(array_size, window_size):
 
-    def median_filter_xform(reducer):
-        return MedianFilter(reducer, window_size)
+    def _median_filter_xform(reducer):
+        return MedianFilter(reducer, array_size, window_size)
 
-    return median_filter_xform
-
-
-    
+    return _median_filter_xform
