@@ -1,4 +1,4 @@
-#  LIDAR noise_reducers
+#  LIDAR noise filters
 
 
 This repository contains a transducer-based implementation of noise filters for processing of LIDAR data.
@@ -12,8 +12,8 @@ This repository contains a transducer-based implementation of noise filters for 
 
 ## Command-line Options
 
-1. --max_range : (float) specifies low-pass frequency level
-2. --min_range : (float) specifies high-pass frequency level
+1. --max_range : (float) specifies low-pass signal level
+2. --min_range : (float) specifies high-pass signal level
 3. --num_measurements : (int) specifies how many measurements should be contained in each observation
 3. --scan_rate : (float) specifies the rate (secs) that the psuedo LIDAR diver will perform measurements and send them to the consuming thread.
 4. --D : specifies the size of the moving median window.
